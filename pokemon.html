@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon API</title>
+</head>
+
+<body>
+
+    <h1>Pokémon API</h1>
+
+    <ul id="pokemonList"></ul>
+
+    <script>
+        let pokemonList = document.getElementById("pokemonList");
+        let url = "https://pokeapi.co/api/v2/";
+
+        async function fetchPokemon() {
+
+            const response = await fetch(url + "pokemon/?limit=25");
+            console.log(response);
+
+            const data = await response.json();
+            console.log(data);
+            console.log(data.results[0].name);
+
+            data.results.forEach((pokemon, index) => {
+
+                let id = pokemon.url.split("/")[6];
+
+                pokemonList.innerHTML += `<li>
+                    <h2>${index + 1}. ${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png">
+                </li>`;
+            })
+        }
+
+        fetchPokemon();
+
+    </script>
+
+</body>
+
+</html>
